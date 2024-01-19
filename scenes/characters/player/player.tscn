@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://s77m84uui5tu"]
 
-[ext_resource type="Script" path="res://prefabs/characters/player/PlayerMovement.cs" id="1_4vf58"]
-[ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://prefabs/characters/player/PDefaultMoveData.tres" id="2_dlwwu"]
+[ext_resource type="Script" path="res://scenes/characters/player/PlayerMovement.cs" id="1_4vf58"]
+[ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://scenes/characters/player/PDefaultMoveData.tres" id="2_dlwwu"]
 [ext_resource type="Texture2D" uid="uid://diohx5fgxnp3j" path="res://assets/heart_plat template/player.png" id="3_2xaaa"]
 [ext_resource type="Texture2D" uid="uid://w3cpwgp73uhn" path="res://assets/heart_plat template/player-sheet.png" id="4_403q8"]
 

@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://diqbuiwgwqqr0"]
 
-[ext_resource type="Script" path="res://prefabs/levels/test_world/TestWorld.cs" id="1_1dftx"]
-[ext_resource type="PackedScene" uid="uid://s77m84uui5tu" path="res://prefabs/characters/player/player.tscn" id="2_y80xx"]
+[ext_resource type="Script" path="res://scenes/levels/test_world/TestWorld.cs" id="1_1dftx"]
+[ext_resource type="PackedScene" uid="uid://s77m84uui5tu" path="res://scenes/characters/player/player.tscn" id="2_y80xx"]
 [ext_resource type="Texture2D" uid="uid://ctjk37hpw7idg" path="res://assets/gizmos/Measurements.png" id="3_r5nul"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrnod"]
