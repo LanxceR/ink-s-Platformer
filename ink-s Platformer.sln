@@ -1,0 +1,19 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ink-s Platformer", "ink-s Platformer.csproj", "{B38D461B-A72C-497F-A115-364F91636A77}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	ExportDebug|Any CPU = ExportDebug|Any CPU
+	ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B38D461B-A72C-497F-A115-364F91636A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38D461B-A72C-497F-A115-364F91636A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38D461B-A72C-497F-A115-364F91636A77}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{B38D461B-A72C-497F-A115-364F91636A77}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{B38D461B-A72C-497F-A115-364F91636A77}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{B38D461B-A72C-497F-A115-364F91636A77}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="MovementData" load_steps=2 format=3 uid="uid://xuj73lcdudvk"]
+
+[ext_resource type="Script" path="res://prefabs/characters/MovementData.cs" id="1_wyor7"]
+
+[resource]
+script = ExtResource("1_wyor7")
+speed = 150.0
+groundAcceleration = 900.0
+groundDeceleration = 1200.0
+airAcceleration = 840.0
+airDeceleration = 900.0
+jumpVelocity = -300.0
+gravityScale = 1.0
+airJumps = 1
