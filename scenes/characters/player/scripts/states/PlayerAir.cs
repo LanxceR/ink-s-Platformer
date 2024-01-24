@@ -13,6 +13,8 @@ public partial class PlayerAir : PlayerState
 
     public override void Enter(Dictionary _msg = null)
     {
+        player.animSprite2D.Play("jump");
+
         if (_msg.ContainsKey("coyoteTime"))
             player.coyoteTimer.Start();
         else if (_msg.ContainsKey("doJump"))
@@ -40,8 +42,9 @@ public partial class PlayerAir : PlayerState
             player.moveData.airDeceleration
         );
 
+        UpdateAnim(inputAxis);
         player.MoveAndSlide();
-
+        
         CheckState(inputAxis);
     }
 
@@ -87,6 +90,14 @@ public partial class PlayerAir : PlayerState
             velocity.Y = velocity.Y / 2;
 
         player.Velocity = velocity;
+    }
+
+    private void UpdateAnim(Vector2 inputAxis)
+    {
+        if (inputAxis.X != 0)
+        {
+            player.animSprite2D.FlipH = inputAxis.X < 0;
+        }
     }
     #endregion
 

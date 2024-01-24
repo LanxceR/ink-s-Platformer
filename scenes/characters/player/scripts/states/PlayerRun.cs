@@ -7,6 +7,11 @@ using System;
 /// </summary>
 public partial class PlayerRun : PlayerState
 {
+    public override void Enter(Dictionary _msg = null)
+    {
+        player.animSprite2D.Play("run");
+    }
+
     public override void PhysicsProcess(double _delta)
     {
         player.ApplyGravity(player.Velocity, _delta);
@@ -25,11 +30,22 @@ public partial class PlayerRun : PlayerState
             player.moveData.groundDeceleration
         );
 
+        UpdateAnim(inputAxis);
         player.MoveAndSlide();
         player.HandleCoyoteTime();
-
+        
         CheckState(inputAxis);
     }
+
+    #region Methods
+    private void UpdateAnim(Vector2 inputAxis)
+    {
+        if (inputAxis.X != 0)
+        {
+            player.animSprite2D.FlipH = inputAxis.X < 0;
+        }
+    }
+    #endregion
 
     #region Change State
     private void CheckState(Vector2 inputAxis)

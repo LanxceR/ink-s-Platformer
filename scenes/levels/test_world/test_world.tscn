@@ -19,6 +19,8 @@ rotation = -1.57079
 texture = ExtResource("3_r5nul")
 
 [node name="Runway" type="StaticBody2D" parent="."]
+process_mode = 4
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Runway"]
 position = Vector2(116, 84)

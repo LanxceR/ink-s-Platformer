@@ -45,7 +45,6 @@ public partial class StateMachine : Node
     public override void _PhysicsProcess(double delta)
     {
         state.PhysicsProcess(delta);
-        //GD.Print(state.Name);
     }
     #endregion
 

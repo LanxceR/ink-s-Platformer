@@ -7,6 +7,11 @@ using System;
 /// </summary>
 public partial class PlayerIdle : PlayerState
 {
+    public override void Enter(Dictionary _msg = null)
+    {
+        player.animSprite2D.Play("idle");
+    }
+
     public override void PhysicsProcess(double _delta)
     {
         player.ApplyGravity(player.Velocity, _delta);
