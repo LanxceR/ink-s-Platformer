@@ -11,4 +11,4 @@ airAcceleration = 840.0
 airDeceleration = 900.0
 jumpVelocity = -300.0
 gravityScale = 1.0
-airJumps = 1
+airJumps = 0

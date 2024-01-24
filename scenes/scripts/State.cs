@@ -2,6 +2,9 @@ using Godot;
 using Godot.Collections;
 using System;
 
+/// <summary>
+/// Base class for all states.
+/// </summary>
 public partial class State : Node
 {
     public StateMachine stateMachine;

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Diagnostics;
 
 public partial class PlayerMovement : CharacterBody2D
 {
@@ -32,8 +31,7 @@ public partial class PlayerMovement : CharacterBody2D
         ApplyGravity(Velocity, delta);
         if (!HandleWallJump(Velocity))
             HandleJump(Velocity);
-        // Get the input direction and handle the movement/deceleration.
-        // As good practice, you should replace UI actions with custom gameplay actions.
+            
         Vector2 inputAxis = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
         HandleAccelerationX(Velocity, inputAxis, delta);
         HandleDecelerationX(Velocity, inputAxis, delta);
