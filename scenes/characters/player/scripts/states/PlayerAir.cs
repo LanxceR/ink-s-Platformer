@@ -9,7 +9,7 @@ public partial class PlayerAir : PlayerState
 {
     [Export]
     private int _airJumpsCounter;
-    private bool doJumpImmediately = false;
+    private bool _jumpOnEnter = false;
 
     public override void Enter(Dictionary _msg = null)
     {
@@ -18,13 +18,13 @@ public partial class PlayerAir : PlayerState
         if (_msg.ContainsKey("coyoteTime"))
             player.coyoteTimer.Start();
         else if (_msg.ContainsKey("doJump"))
-            doJumpImmediately = true;
+            _jumpOnEnter = true;
 
         _airJumpsCounter = player.moveData.airJumps;
     }
 
     public override void PhysicsProcess(double _delta)
-    {
+    {       
         player.ApplyGravity(player.Velocity, _delta);
         HandleJump(player.Velocity);
 
@@ -44,7 +44,7 @@ public partial class PlayerAir : PlayerState
 
         UpdateAnim(inputAxis);
         player.MoveAndSlide();
-        
+
         CheckState(inputAxis);
     }
 
@@ -52,15 +52,14 @@ public partial class PlayerAir : PlayerState
     private void HandleJump(Vector2 velocity)
     {
         // Jump key has already been pressed from state transition
-        if (doJumpImmediately)
+        if (_jumpOnEnter)
         {
-            GD.Print("Jump Immediately");
             // Jump
             velocity.Y = player.moveData.jumpVelocity;
-            doJumpImmediately = false;
+            _jumpOnEnter = false;
         }
         // Jump key is pressed when falling/mid-air
-        else if (Input.IsActionJustPressed("jump"))
+        else if (InputBuffer.IsActionJustPressed("jump"))
         {
             if (player.coyoteTimer.TimeLeft > 0)
             {
@@ -68,7 +67,6 @@ public partial class PlayerAir : PlayerState
                 // Jump
                 velocity.Y = player.moveData.jumpVelocity;
                 player.coyoteTimer.Stop();
-                player.jumpBufferTimer.Stop();
             }
             else if (_airJumpsCounter > 0)
             {
@@ -76,12 +74,6 @@ public partial class PlayerAir : PlayerState
                 // Jump at 0.8x velocity
                 velocity.Y = player.moveData.jumpVelocity * 0.8f;
                 _airJumpsCounter--;
-            }
-            else
-            {
-                GD.Print("Buffer Start");
-                // Jump was not possible, start jump buffer
-                player.jumpBufferTimer.Start();
             }
         }
 
@@ -104,6 +96,13 @@ public partial class PlayerAir : PlayerState
     #region Change State
     private void CheckState(Vector2 inputAxis)
     {
+        // Wall Slide
+        if (player.IsOnWall())
+            stateMachine.TransitionTo(
+                nameof(PlayerWSlide),
+                new Dictionary { ["inputAxis"] = inputAxis }
+            );
+
         // Landing
         if (player.IsOnFloor())
         {

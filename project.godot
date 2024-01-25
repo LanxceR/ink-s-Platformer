@@ -17,6 +17,10 @@ config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://assets/icon.svg"
 
+[autoload]
+
+InputBuffer="*res://src/InputBuffer.cs"
+
 [display]
 
 window/size/viewport_width=240

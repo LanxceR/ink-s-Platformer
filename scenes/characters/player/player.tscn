@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://s77m84uui5tu"]
+[gd_scene load_steps=21 format=3 uid="uid://s77m84uui5tu"]
 
 [ext_resource type="Script" path="res://scenes/characters/player/scripts/Player.cs" id="1_2j7g2"]
 [ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://scenes/characters/player/resources/PDefaultMoveData.tres" id="2_i25yi"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerIdle.cs" id="6_5yuxp"]
 [ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerRun.cs" id="7_6gd4y"]
 [ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerAir.cs" id="8_ggvwx"]
+[ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerWSlide.cs" id="9_6lm6p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qv833"]
 atlas = ExtResource("3_2xaaa")
@@ -93,13 +94,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iudhh"]
 size = Vector2(8, 16)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animSprite2D", "coyoteTimer", "jumpBufferTimer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animSprite2D", "coyoteTimer")]
 floor_snap_length = 3.0
 script = ExtResource("1_2j7g2")
 moveData = ExtResource("2_i25yi")
 animSprite2D = NodePath("AnimatedSprite2D")
 coyoteTimer = NodePath("CoyoteJumpTimer")
-jumpBufferTimer = NodePath("JumpBufferTimer")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
@@ -131,3 +131,6 @@ script = ExtResource("7_6gd4y")
 
 [node name="PlayerAir" type="Node2D" parent="StateMachine"]
 script = ExtResource("8_ggvwx")
+
+[node name="PlayerWSlide" type="Node2D" parent="StateMachine"]
+script = ExtResource("9_6lm6p")

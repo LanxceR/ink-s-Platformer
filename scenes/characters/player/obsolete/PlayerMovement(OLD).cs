@@ -66,7 +66,7 @@ public partial class PlayerMovement : CharacterBody2D
         // Normal is a vector that points away from the wall
         Vector2 wallNormal = GetWallNormal();
 
-        if (Input.IsActionJustPressed("jump") || _jumpBufferTimer.TimeLeft > 0)
+        if (InputBuffer.IsActionJustPressed("jump") || _jumpBufferTimer.TimeLeft > 0)
         {
             velocity = new Vector2(wallNormal.X * _movementData.speed, _movementData.jumpVelocity);
             GD.Print("Wall Jumped");
@@ -84,7 +84,7 @@ public partial class PlayerMovement : CharacterBody2D
         if (IsOnFloor() || _coyoteTimer.TimeLeft > 0)
         {
             // Jump full height first.
-            if (Input.IsActionJustPressed("jump") || _jumpBufferTimer.TimeLeft > 0)
+            if (InputBuffer.IsActionJustPressed("jump") || _jumpBufferTimer.TimeLeft > 0)
                 velocity.Y = _movementData.jumpVelocity;
         }
         else if (!IsOnFloor())
@@ -93,7 +93,7 @@ public partial class PlayerMovement : CharacterBody2D
             if (Input.IsActionJustReleased("jump") && velocity.Y < 0)
                 velocity.Y = velocity.Y / 2;
 
-            if (Input.IsActionJustPressed("jump"))
+            if (InputBuffer.IsActionJustPressed("jump"))
             {
                 // Air jumps
                 if (_airJumpsCounter > 0)

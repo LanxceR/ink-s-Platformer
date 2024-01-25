@@ -3,12 +3,6 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-    #region Constants
-    // Get the gravity from the project settings to be synced with RigidBody nodes.
-    // Defaults to 980.0f pixels per second (100px = 1m)
-    public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-    #endregion
-
     #region Exported Variables
     [Export]
     public MovementData moveData;
@@ -18,15 +12,27 @@ public partial class Player : CharacterBody2D
 
     [Export]
     public Timer coyoteTimer;
-
-    [Export]
-    public Timer jumpBufferTimer;
     #endregion
 
-    public void ApplyGravity(Vector2 velocity, double delta)
+    // Get the gravity from the project settings to be synced with RigidBody nodes.
+    // Defaults to 980.0f pixels per second (100px = 1m)
+    public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
+
+    public void ApplyGravity(
+        Vector2 velocity,
+        double delta,
+        float mult = 1f,
+        float multDuration = 0f
+    )
     {
+        float grav = gravity * moveData.gravityScale;
+        float modGravThreshold = grav * mult * multDuration;
+        float normalGrav = grav * (float)delta;
+        float finalGrav =
+            velocity.Y < modGravThreshold && modGravThreshold != 0 ? normalGrav * mult : normalGrav;
+
         if (!IsOnFloor())
-            velocity.Y += gravity * moveData.gravityScale * (float)delta;
+            velocity.Y += finalGrav;
         Velocity = velocity;
     }
 
@@ -71,7 +77,7 @@ public partial class Player : CharacterBody2D
         if (justLeftLedge)
         {
             coyoteTimer.Start();
-            GD.Print($"Coyote Time");
+            GD.Print("Coyote Time");
         }
     }
 }

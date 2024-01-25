@@ -54,7 +54,7 @@ public partial class PlayerRun : PlayerState
             // Fall.
             stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["coyoteTime"] = true });
 
-        if (Input.IsActionJustPressed("jump") || player.jumpBufferTimer.TimeLeft > 0)
+        if (InputBuffer.IsActionJustPressed("jump"))
             // Jump.
             stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["doJump"] = true });
 
