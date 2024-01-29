@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
@@ -12,12 +13,40 @@ public partial class Player : CharacterBody2D
 
     [Export]
     public Timer coyoteTimer;
+
+    [Export]
+    public Timer wallJumpRecoveryTimer;
+
+    [Export]
+    public StateMachine stateMachine;
     #endregion
+
+    private Node[] _childNodes;
+    private Vector2 _wallNormal;
+    private bool _shortWallJump;
+    private bool _forceMoveX;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     // Defaults to 980.0f pixels per second (100px = 1m)
     public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
+    public override void _Ready()
+    {
+        _childNodes = stateMachine.GetChildren().ToArray();
+
+        foreach (Node child in _childNodes)
+        {
+            if (child is PlayerAir)
+                (child as PlayerAir).WallJump += HandleWallJumpTime;
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+        //GD.Print(Velocity);
+    }
+
+    #region Methods
     public void ApplyGravity(
         Vector2 velocity,
         double delta,
@@ -43,8 +72,18 @@ public partial class Player : CharacterBody2D
         float acceleration
     )
     {
-        if (input_axis != Vector2.Zero)
+        if (wallJumpRecoveryTimer.TimeLeft > 0)
         {
+            // Recovering from wall slide jump.
+            velocity.X = Mathf.MoveToward(
+                velocity.X,
+                _wallNormal.X * moveData.speed,
+                acceleration * (float)delta
+            );
+        }
+        else
+        {
+            _forceMoveX = false;
             velocity.X = Mathf.MoveToward(
                 velocity.X,
                 input_axis.X * moveData.speed,
@@ -63,7 +102,7 @@ public partial class Player : CharacterBody2D
     )
     {
         // If player's current input is different from velocity direction
-        if (Mathf.Sign(input_axis.X) != Mathf.Sign(velocity.X) && velocity.X != 0f)
+        if (Mathf.Sign(input_axis.X) != Mathf.Sign(velocity.X) && velocity.X != 0f && !_forceMoveX)
         {
             velocity.X = Mathf.MoveToward(velocity.X, 0, deceleration * (float)delta);
         }
@@ -77,7 +116,16 @@ public partial class Player : CharacterBody2D
         if (justLeftLedge)
         {
             coyoteTimer.Start();
-            GD.Print("Coyote Time");
+            //GD.Print("Coyote Time");
         }
     }
+
+    public void HandleWallJumpTime(bool shortWallJump, Vector2 wallNormal)
+    {
+        wallJumpRecoveryTimer.Start();
+        _forceMoveX = true;
+        _shortWallJump = shortWallJump;
+        _wallNormal = wallNormal;
+    }
+    #endregion
 }

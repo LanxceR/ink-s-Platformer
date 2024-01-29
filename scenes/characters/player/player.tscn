@@ -92,14 +92,16 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iudhh"]
-size = Vector2(8, 16)
+size = Vector2(10, 16)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animSprite2D", "coyoteTimer")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animSprite2D", "coyoteTimer", "wallJumpRecoveryTimer", "stateMachine")]
 floor_snap_length = 3.0
 script = ExtResource("1_2j7g2")
 moveData = ExtResource("2_i25yi")
 animSprite2D = NodePath("AnimatedSprite2D")
 coyoteTimer = NodePath("CoyoteJumpTimer")
+wallJumpRecoveryTimer = NodePath("WallJumpRecoveryTimer")
+stateMachine = NodePath("StateMachine")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
@@ -115,8 +117,8 @@ shape = SubResource("RectangleShape2D_iudhh")
 wait_time = 0.083
 one_shot = true
 
-[node name="JumpBufferTimer" type="Timer" parent="."]
-wait_time = 0.083
+[node name="WallJumpRecoveryTimer" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [node name="StateMachine" type="Node2D" parent="."]

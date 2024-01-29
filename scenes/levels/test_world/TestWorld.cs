@@ -20,7 +20,4 @@ public partial class TestWorld : Node
         // Set polygon_2d vertices the same with col_poly_2d vertices
         _polygon_2d.Polygon = _col_poly_2d.Polygon;
     }
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta) { }
 }

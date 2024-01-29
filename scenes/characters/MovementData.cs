@@ -51,13 +51,25 @@ public partial class MovementData : Resource
     /// Wall slide gravity scale.
     /// </summary>
     [Export]
-    public float wSlideGravScale = .5f;
+    public float wSlideGravScale = .1f;
 
     /// <summary>
     /// Wall slide cling duration.
     /// </summary>
     [Export]
-    public float wSlideClingDuration = 1f;
+    public float wSlideClingDuration = .5f;
+
+    /// <summary>
+    /// Wall slide cling duration.
+    /// </summary>
+    [Export]
+    public float wJumpXSpeed = 140.0f;
+
+    /// <summary>
+    /// Wall slide cling duration.
+    /// </summary>
+    [Export]
+    public float wJumpYSpeed = -240.0f;
 
     /// <summary>
     /// Gravity scale.

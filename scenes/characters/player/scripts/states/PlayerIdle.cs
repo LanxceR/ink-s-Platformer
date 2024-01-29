@@ -7,8 +7,6 @@ using System;
 /// </summary>
 public partial class PlayerIdle : PlayerState
 {
-    int i;
-
     public override void Enter(Dictionary _msg = null)
     {
         player.animSprite2D.Play("idle");
@@ -39,11 +37,9 @@ public partial class PlayerIdle : PlayerState
             // Fall.
             stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["coyoteTime"] = true });
 
-        if (InputBuffer.IsActionJustPressed("jump")){
-            i++;
+        if (InputBuffer.IsActionJustPressed("jump"))
             // Jump.
             stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["doJump"] = true });
-        }
 
         if (Input.GetVector("move_left", "move_right", "ui_up", "ui_down").X != 0f)
             // Do run.

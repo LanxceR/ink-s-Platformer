@@ -19,8 +19,7 @@ rotation = -1.57079
 texture = ExtResource("3_r5nul")
 
 [node name="Runway" type="StaticBody2D" parent="."]
-process_mode = 4
-visible = false
+position = Vector2(32, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Runway"]
 position = Vector2(116, 84)
@@ -38,7 +37,7 @@ texture = ExtResource("3_r5nul")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-polygon = PackedVector2Array(-8, 0, 8, 0, 8, 104, 40, 104, 72, 120, 96, 120, 112, 104, 128, 104, 128, 136, 152, 136, 152, 112, 176, 112, 176, 128, 192, 128, 208, 112, 232, 112, 232, 0, 248, 0, 248, 160, -8, 160)
+polygon = PackedVector2Array(-8, -128, 8, -128, 8, 104, 40, 104, 72, 120, 96, 120, 112, 104, 128, 104, 128, 136, 152, 136, 152, 112, 176, 112, 176, 128, 192, 128, 208, 112, 232, 112, 232, -128, 248, -128, 248, 160, -8, 160)
 
 [node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionPolygon2D"]
 

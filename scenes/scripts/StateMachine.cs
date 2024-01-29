@@ -14,10 +14,14 @@ public partial class StateMachine : Node
     public NodePath initialState;
 
     public State state;
+    public string stateName;
 
     // Called when the node enters the scene tree for the first time.
     public override async void _Ready()
     {
+        // Set state name string after transitioning to a new state
+        Transitioned += SetStateName;
+
         // Set initial state
         state = GetNode<State>(initialState);
 
@@ -61,6 +65,12 @@ public partial class StateMachine : Node
         state.Exit();
         state = GetNode<State>(targetStateName);
         state.Enter(msg);
-        EmitSignal(SignalName.Transitioned);
+        EmitSignal(SignalName.Transitioned, targetStateName);
+    }
+
+    public void SetStateName(string stateName)
+    {
+        this.stateName = stateName;        
+        GD.Print($"Entered state: {stateName}");
     }
 }
