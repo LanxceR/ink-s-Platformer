@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ctjk37hpw7idg" path="res://assets/gizmos/Measurements.png" id="3_r5nul"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrnod"]
-size = Vector2(200, 8)
+size = Vector2(56, 8)
 
 [node name="TestWorld" type="Node2D" node_paths=PackedStringArray("_polygon_2d", "_col_poly_2d")]
 script = ExtResource("1_1dftx")
@@ -19,19 +19,20 @@ rotation = -1.57079
 texture = ExtResource("3_r5nul")
 
 [node name="Runway" type="StaticBody2D" parent="."]
-position = Vector2(32, 0)
+position = Vector2(32, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Runway"]
-position = Vector2(116, 84)
+position = Vector2(44, 84)
 shape = SubResource("RectangleShape2D_rrnod")
 
 [node name="Polygon2D" type="Polygon2D" parent="Runway/CollisionShape2D"]
-position = Vector2(-124, -84)
-polygon = PackedVector2Array(24, 80, 24, 88, 224, 88, 224, 80)
+position = Vector2(-70, -84)
+scale = Vector2(0.4375, 1)
+polygon = PackedVector2Array(96, 80, 96, 88, 224, 88, 224, 80)
 
 [node name="H Measure" type="Sprite2D" parent="Runway"]
 z_index = -99
-position = Vector2(116, 56)
+position = Vector2(80, 56)
 texture = ExtResource("3_r5nul")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

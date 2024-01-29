@@ -12,7 +12,7 @@ public partial class InputBuffer : Node
     /// How many milliseconds ahead of time the player can make an input and have it still be recognized.
     /// 0.083 = ~5 frames in 60 fps.
     /// </summary>
-    private static readonly double BUFFER_WINDOW = 0.083;
+    private static readonly double BUFFER_WINDOW = 0.1;
 
     /// <summary>
     /// Godot has a 0.5f default deadzone.
@@ -20,9 +20,9 @@ public partial class InputBuffer : Node
     private static readonly float JOY_DEADZONE = 0.5f;
 
     // Dictionaries for storing when a key was last pressed.
-    private static Dictionary<Key, double> _keyboardTimers;
-    private static Dictionary<MouseButton, double> _mouseButtonTimers;
-    private static Dictionary<JoyButton, double> _joypadTimers;
+    private static Dictionary<string, double> _keyboardTimers;
+    private static Dictionary<string, double> _mouseButtonTimers;
+    private static Dictionary<string, double> _joypadTimers;
     private static Dictionary<JoyAxis, double> _joystickTimers;
 
     // Called when the node enters the scene tree for the first time.
@@ -31,9 +31,9 @@ public partial class InputBuffer : Node
         ProcessMode = ProcessModeEnum.Inherit;
 
         // Initialize dictionaries.
-        _keyboardTimers = new Dictionary<Key, double>();
-        _mouseButtonTimers = new Dictionary<MouseButton, double>();
-        _joypadTimers = new Dictionary<JoyButton, double>();
+        _keyboardTimers = new Dictionary<string, double>();
+        _mouseButtonTimers = new Dictionary<string, double>();
+        _joypadTimers = new Dictionary<string, double>();
         _joystickTimers = new Dictionary<JoyAxis, double>();
     }
 
@@ -41,15 +41,15 @@ public partial class InputBuffer : Node
     public override void _Process(double delta)
     {
         // Countdown timers
-        foreach (KeyValuePair<Key, double> k in _keyboardTimers)
+        foreach (KeyValuePair<string, double> k in _keyboardTimers)
             if (_keyboardTimers[k.Key] > 0)
                 _keyboardTimers[k.Key] = Mathf.MoveToward(k.Value, 0, delta);
 
-        foreach (KeyValuePair<MouseButton, double> mb in _mouseButtonTimers)
+        foreach (KeyValuePair<string, double> mb in _mouseButtonTimers)
             if (_mouseButtonTimers[mb.Key] > 0)
                 _mouseButtonTimers[mb.Key] = Mathf.MoveToward(mb.Value, 0, delta);
 
-        foreach (KeyValuePair<JoyButton, double> jb in _joypadTimers)
+        foreach (KeyValuePair<string, double> jb in _joypadTimers)
             if (_joypadTimers[jb.Key] > 0)
                 _joypadTimers[jb.Key] = Mathf.MoveToward(jb.Value, 0, delta);
 
@@ -63,57 +63,83 @@ public partial class InputBuffer : Node
     {
         // Get the input and store it in the dictionary.
         // Keyboard
-        if (@event is InputEventKey)
+        if (@event is InputEventKey eventKey)
         {
-            InputEventKey eventKey = @event as InputEventKey;
-            if (!eventKey.Pressed || eventKey.IsEcho())
+            if (eventKey.IsEcho())
                 return;
-
+                
             Key k = eventKey.PhysicalKeycode;
 
-            if (_keyboardTimers.ContainsKey(k))
-                // Set the most recent timestamp of a key.
-                _keyboardTimers[k] = BUFFER_WINDOW;
+            if (eventKey.Pressed)
+            {
+                if (_keyboardTimers.ContainsKey($"{k}_pressed"))
+                    // Set the most recent timestamp of a key.
+                    _keyboardTimers[$"{k}_pressed"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{k}_pressed", BUFFER_WINDOW);
+            }
             else
-                // Add entry of the key and it's timestamp.
-                _keyboardTimers.Add(k, BUFFER_WINDOW);
+            {
+                if (_keyboardTimers.ContainsKey($"{k}_released"))
+                    // Set the most recent timestamp of a key.
+                    _keyboardTimers[$"{k}_released"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{k}_released", BUFFER_WINDOW);
+            }
         }
         // Mouse Button
-        else if (@event is InputEventMouseButton)
+        else if (@event is InputEventMouseButton eventMouseButton)
         {
-            InputEventMouseButton eventMouseButton = @event as InputEventMouseButton;
-            if (!eventMouseButton.Pressed || eventMouseButton.IsEcho())
-                return;
-
             MouseButton mb = eventMouseButton.ButtonIndex;
 
-            if (_mouseButtonTimers.ContainsKey(mb))
-                // Set the most recent timestamp of a button.
-                _mouseButtonTimers[mb] = BUFFER_WINDOW;
+            if (eventMouseButton.Pressed)
+            {
+                if (_keyboardTimers.ContainsKey($"{mb}_pressed"))
+                    // Set the most recent timestamp of a mouse button.
+                    _keyboardTimers[$"{mb}_pressed"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{mb}_pressed", BUFFER_WINDOW);
+            }
             else
-                // Add entry of the button and it's timestamp.
-                _mouseButtonTimers.Add(mb, BUFFER_WINDOW);
+            {
+                if (_keyboardTimers.ContainsKey($"{mb}_released"))
+                    // Set the most recent timestamp of a mouse button.
+                    _keyboardTimers[$"{mb}_released"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{mb}_released", BUFFER_WINDOW);
+            }
         }
         // Joypad
-        else if (@event is InputEventJoypadButton)
+        else if (@event is InputEventJoypadButton eventJoypadButton)
         {
-            InputEventJoypadButton eventJoypadButton = @event as InputEventJoypadButton;
-            if (!eventJoypadButton.Pressed || eventJoypadButton.IsEcho())
-                return;
-
             JoyButton jb = eventJoypadButton.ButtonIndex;
 
-            if (_joypadTimers.ContainsKey(jb))
-                // Set the most recent timestamp of a button.
-                _joypadTimers[jb] = BUFFER_WINDOW;
+            if (eventJoypadButton.Pressed)
+            {
+                if (_keyboardTimers.ContainsKey($"{jb}_pressed"))
+                    // Set the most recent timestamp of a joy button.
+                    _keyboardTimers[$"{jb}_pressed"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{jb}_pressed", BUFFER_WINDOW);
+            }
             else
-                // Add entry of the button and it's timestamp.
-                _joypadTimers.Add(jb, BUFFER_WINDOW);
+            {
+                if (_keyboardTimers.ContainsKey($"{jb}_released"))
+                    // Set the most recent timestamp of a joy button.
+                    _keyboardTimers[$"{jb}_released"] = BUFFER_WINDOW;
+                else
+                    // Add entry of the key and it's timestamp.
+                    _keyboardTimers.Add($"{jb}_released", BUFFER_WINDOW);
+            }
         }
         // Joystick
-        else if (@event is InputEventJoypadMotion)
+        else if (@event is InputEventJoypadMotion eventJoypadMotion)
         {
-            InputEventJoypadMotion eventJoypadMotion = @event as InputEventJoypadMotion;
             if (Math.Abs(eventJoypadMotion.AxisValue) < JOY_DEADZONE)
                 return;
 
@@ -140,45 +166,41 @@ public partial class InputBuffer : Node
         foreach (InputEvent @event in InputMap.ActionGetEvents(action))
         {
             // Keyboard
-            if (@event is InputEventKey)
+            if (@event is InputEventKey eventKey)
             {
-                InputEventKey eventKey = @event as InputEventKey;
                 Key k = eventKey.PhysicalKeycode;
 
-                if (_keyboardTimers.ContainsKey(k))
-                    if (_keyboardTimers[k] > 0)
+                if (_keyboardTimers.ContainsKey($"{k}_pressed"))
+                    if (_keyboardTimers[$"{k}_pressed"] > 0)
                     {
                         return true;
                     }
             }
             // Mouse Button
-            else if (@event is InputEventMouseButton)
+            else if (@event is InputEventMouseButton eventMouseButton)
             {
-                InputEventMouseButton eventMouseButton = @event as InputEventMouseButton;
                 MouseButton mb = eventMouseButton.ButtonIndex;
 
-                if (_mouseButtonTimers.ContainsKey(mb))
-                    if (_mouseButtonTimers[mb] > 0)
+                if (_mouseButtonTimers.ContainsKey($"{mb}_pressed"))
+                    if (_mouseButtonTimers[$"{mb}_pressed"] > 0)
                     {
                         return true;
                     }
             }
             // Joypad
-            else if (@event is InputEventJoypadButton)
+            else if (@event is InputEventJoypadButton eventJoypadButton)
             {
-                InputEventJoypadButton eventJoypadButton = @event as InputEventJoypadButton;
-                JoyButton b = eventJoypadButton.ButtonIndex;
+                JoyButton jb = eventJoypadButton.ButtonIndex;
 
-                if (_joypadTimers.ContainsKey(b))
-                    if (_joypadTimers[b] > 0)
+                if (_joypadTimers.ContainsKey($"{jb}_pressed"))
+                    if (_joypadTimers[$"{jb}_pressed"] > 0)
                     {
                         return true;
                     }
             }
             // Joystick
-            else if (@event is InputEventJoypadMotion)
+            else if (@event is InputEventJoypadMotion eventJoypadMotion)
             {
-                InputEventJoypadMotion eventJoypadMotion = @event as InputEventJoypadMotion;
                 if (Math.Abs(eventJoypadMotion.AxisValue) < JOY_DEADZONE)
                     return false;
 
@@ -193,5 +215,68 @@ public partial class InputBuffer : Node
         }
 
         return false;
-    }    
+    }
+
+    /// <summary>
+    /// Returns whether any of the keys/buttons in the given action were released within the buffer window.
+    /// </summary>
+    /// <param name="action">The action to check for in the buffer.</param>
+    /// <returns>
+    ///  True if any of the action's associated keys/buttons were released within the buffer window, false otherwise.
+    /// </returns>
+    public static bool IsActionJustReleased(string action)
+    {
+        foreach (InputEvent @event in InputMap.ActionGetEvents(action))
+        {
+            // Keyboard
+            if (@event is InputEventKey eventKey)
+            {
+                Key k = eventKey.PhysicalKeycode;
+
+                if (_keyboardTimers.ContainsKey($"{k}_released"))
+                    if (_keyboardTimers[$"{k}_released"] > 0)
+                    {
+                        return true;
+                    }
+            }
+            // Mouse Button
+            else if (@event is InputEventMouseButton eventMouseButton)
+            {
+                MouseButton mb = eventMouseButton.ButtonIndex;
+
+                if (_mouseButtonTimers.ContainsKey($"{mb}_released"))
+                    if (_mouseButtonTimers[$"{mb}_released"] > 0)
+                    {
+                        return true;
+                    }
+            }
+            // Joypad
+            else if (@event is InputEventJoypadButton eventJoypadButton)
+            {
+                JoyButton jb = eventJoypadButton.ButtonIndex;
+
+                if (_joypadTimers.ContainsKey($"{jb}_released"))
+                    if (_joypadTimers[$"{jb}_released"] > 0)
+                    {
+                        return true;
+                    }
+            }
+            // Joystick
+            else if (@event is InputEventJoypadMotion eventJoypadMotion)
+            {
+                if (Math.Abs(eventJoypadMotion.AxisValue) < JOY_DEADZONE)
+                    return false;
+
+                JoyAxis ja = eventJoypadMotion.Axis;
+
+                if (_joystickTimers.ContainsKey(ja))
+                    if (_joystickTimers[ja] > 0)
+                    {
+                        return true;
+                    }
+            }
+        }
+
+        return false;
+    }
 }

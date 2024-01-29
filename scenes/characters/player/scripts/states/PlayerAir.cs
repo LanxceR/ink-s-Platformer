@@ -13,9 +13,10 @@ public partial class PlayerAir : PlayerState
 
     [Export]
     private int _airJumpsCounter;
-    
+
     private bool _jumpOnEnter = false;
     private bool _canWallJump = false;
+    private bool _checkJumpInput;
 
     public override void Enter(Dictionary _msg = null)
     {
@@ -31,6 +32,7 @@ public partial class PlayerAir : PlayerState
                 _canWallJump = true;
         }
 
+        _checkJumpInput = true;
         _airJumpsCounter = player.moveData.airJumps;
     }
 
@@ -77,9 +79,10 @@ public partial class PlayerAir : PlayerState
             // Jump
             velocity.Y = player.moveData.jumpVelocity;
             _jumpOnEnter = false;
+            _checkJumpInput = false;
         }
         // Jump key is pressed when falling/mid-air.
-        else if (InputBuffer.IsActionJustPressed("jump"))
+        else if (InputBuffer.IsActionJustPressed("jump") && _checkJumpInput)
         {
             if (wallNormalX != 0)
             {
@@ -90,14 +93,16 @@ public partial class PlayerAir : PlayerState
                     player.moveData.wJumpYSpeed
                 );
                 EmitSignal(SignalName.WallJump, false, new Vector2(wallNormalX, 0));
-            }
-            if (player.coyoteTimer.TimeLeft > 0)
+                _checkJumpInput = false;
+            }            
+            else if (player.coyoteTimer.TimeLeft > 0)
             {
                 GD.Print("Coyote Jump");
                 // Jump
                 velocity.Y = player.moveData.jumpVelocity;
                 player.coyoteTimer.Stop();
                 _jumpOnEnter = false;
+                _checkJumpInput = false;
             }
             else if (_airJumpsCounter > 0)
             {
@@ -105,12 +110,16 @@ public partial class PlayerAir : PlayerState
                 // Jump at 0.8x velocity.
                 velocity.Y = player.moveData.jumpVelocity * 0.8f;
                 _airJumpsCounter--;
+                _checkJumpInput = false;
             }
         }
 
         // Divide current velocity by half if button is released mid air for a shorter jump peak.
         if (Input.IsActionJustReleased("jump") && velocity.Y < 0)
+        {
             velocity.Y /= 2;
+            _checkJumpInput = true;
+        }
 
         player.Velocity = velocity;
     }
