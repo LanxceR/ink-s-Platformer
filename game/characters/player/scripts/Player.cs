@@ -64,6 +64,7 @@ public partial class Player : CharacterBody2D
         float multDuration = 0f
     )
     {
+        // TODO?: Implement terminal velocity (MaxFall).
         float grav = gravity * moveData.gravityScale;
         float modGravThreshold = grav * mult * multDuration;
         float normalGrav = grav * (float)delta;

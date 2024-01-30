@@ -21,6 +21,7 @@ config/icon="res://assets/ink/Icon.png"
 
 InputBuffer="*res://autoloads/InputBuffer.cs"
 Events="*res://autoloads/Events.cs"
+LevelTransition="*res://autoloads/level_transition.tscn"
 
 [display]
 

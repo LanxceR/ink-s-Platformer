@@ -39,7 +39,7 @@ public partial class MovementData : Resource
     /// For example: <c>-300.0f px/s = ~45.918px peak height.</c>
     /// </summary>
     [Export]
-    public float jumpVelocity = -240.0f;
+    public float jumpVelocity = -260.0f;
 
     /// <summary>
     /// Gravity scale.
@@ -69,7 +69,7 @@ public partial class MovementData : Resource
     /// Wall slide cling duration.
     /// </summary>
     [Export]
-    public float wJumpYSpeed = -240.0f;
+    public float wJumpYSpeed = -260.0f;
 
     /// <summary>
     /// Gravity scale.
