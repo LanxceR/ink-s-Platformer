@@ -136,9 +136,8 @@ public partial class PlayerAir : PlayerState
     #region Change State
     private void CheckState(Vector2 inputAxis)
     {
-        // TODO: Maybe implement wall jump based off of proximity to walls instead?
         // Wall Slide
-        if (player.IsOnWall() && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X && _checkInput)
+        if (player.IsOnWallOnly() && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X && player.Velocity.Y > 0)
             stateMachine.TransitionTo(
                 nameof(PlayerWSlide),
                 new Dictionary { ["inputAxis"] = inputAxis }

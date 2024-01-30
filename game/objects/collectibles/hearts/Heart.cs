@@ -17,7 +17,7 @@ public partial class Heart : Area2D
         Node[] hearts = GetTree().GetNodesInGroup("Hearts").ToArray();
         if (hearts.Length <= 1)
         {
-            // This is the last heart
+            // This is the last heart.
             GD.Print("Level Completed");
             GetNode<Events>("/root/Events").EmitSignal(Events.SignalName.LevelCompleted);
         }
