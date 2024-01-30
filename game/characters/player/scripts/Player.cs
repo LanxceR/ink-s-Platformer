@@ -5,11 +5,9 @@ using System.Linq;
 public partial class Player : CharacterBody2D
 {
     #region Exported Variables
+    [ExportGroup("Movement")]
     [Export]
     public MovementData moveData;
-
-    [Export]
-    public AnimatedSprite2D animSprite2D;
 
     [Export]
     public Timer coyoteTimer;
@@ -17,11 +15,20 @@ public partial class Player : CharacterBody2D
     [Export]
     public Timer wallJumpRecoveryTimer;
 
+    [ExportGroup("Collisions")]
+    [Export]
+    public Area2D hazardDetectionArea;
+
+    [ExportGroup("Misc")]
     [Export]
     public StateMachine stateMachine;
+
+    [Export]
+    public AnimatedSprite2D animSprite2D;
     #endregion
 
     private Node[] _childNodes;
+    private Vector2 spawnPos;
     private Vector2 _wallNormal;
     private bool _shortWallJump;
     private bool _forceMoveX;
@@ -39,6 +46,9 @@ public partial class Player : CharacterBody2D
             if (child is PlayerAir)
                 (child as PlayerAir).WallJump += HandleWallJumpTime;
         }
+
+        hazardDetectionArea.AreaEntered += OnHazardEntered;
+        spawnPos = GlobalPosition;
     }
 
     public override void _Process(double delta)
@@ -126,6 +136,12 @@ public partial class Player : CharacterBody2D
         _forceMoveX = true;
         _shortWallJump = shortWallJump;
         _wallNormal = wallNormal;
+    }    
+
+    private void OnHazardEntered(Area2D area)
+    {
+        GD.Print("DAMAGE");
+        GlobalPosition = spawnPos;
     }
     #endregion
 }

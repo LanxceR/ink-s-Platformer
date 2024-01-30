@@ -1,14 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://s77m84uui5tu"]
+[gd_scene load_steps=22 format=3 uid="uid://s77m84uui5tu"]
 
-[ext_resource type="Script" path="res://scenes/characters/player/scripts/Player.cs" id="1_2j7g2"]
-[ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://scenes/characters/player/resources/PDefaultMoveData.tres" id="2_i25yi"]
+[ext_resource type="Script" path="res://game/characters/player/scripts/Player.cs" id="1_2j7g2"]
+[ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://game/characters/player/resources/PDefaultMoveData.tres" id="2_i25yi"]
 [ext_resource type="Texture2D" uid="uid://diohx5fgxnp3j" path="res://assets/heart_plat template/player.png" id="3_2xaaa"]
 [ext_resource type="Texture2D" uid="uid://w3cpwgp73uhn" path="res://assets/heart_plat template/player-sheet.png" id="4_403q8"]
-[ext_resource type="Script" path="res://scenes/scripts/StateMachine.cs" id="5_5cw78"]
-[ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerIdle.cs" id="6_5yuxp"]
-[ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerRun.cs" id="7_6gd4y"]
-[ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerAir.cs" id="8_ggvwx"]
-[ext_resource type="Script" path="res://scenes/characters/player/scripts/states/PlayerWSlide.cs" id="9_6lm6p"]
+[ext_resource type="Script" path="res://game/scripts/StateMachine.cs" id="5_5cw78"]
+[ext_resource type="Script" path="res://game/characters/player/scripts/states/PlayerIdle.cs" id="6_5yuxp"]
+[ext_resource type="Script" path="res://game/characters/player/scripts/states/PlayerRun.cs" id="7_6gd4y"]
+[ext_resource type="Script" path="res://game/characters/player/scripts/states/PlayerAir.cs" id="8_ggvwx"]
+[ext_resource type="Script" path="res://game/characters/player/scripts/states/PlayerWSlide.cs" id="9_6lm6p"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qv833"]
 atlas = ExtResource("3_2xaaa")
@@ -94,14 +94,19 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iudhh"]
 size = Vector2(10, 16)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animSprite2D", "coyoteTimer", "wallJumpRecoveryTimer", "stateMachine")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kc07k"]
+size = Vector2(6, 13)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("coyoteTimer", "wallJumpRecoveryTimer", "hazardDetectionArea", "stateMachine", "animSprite2D")]
+collision_layer = 2
 floor_snap_length = 3.0
 script = ExtResource("1_2j7g2")
 moveData = ExtResource("2_i25yi")
-animSprite2D = NodePath("AnimatedSprite2D")
 coyoteTimer = NodePath("CoyoteJumpTimer")
 wallJumpRecoveryTimer = NodePath("WallJumpRecoveryTimer")
+hazardDetectionArea = NodePath("HazardDetector")
 stateMachine = NodePath("StateMachine")
+animSprite2D = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
@@ -112,6 +117,14 @@ frame_progress = 0.211894
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_iudhh")
+
+[node name="HazardDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardDetector"]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_kc07k")
 
 [node name="CoyoteJumpTimer" type="Timer" parent="."]
 wait_time = 0.083
@@ -136,3 +149,8 @@ script = ExtResource("8_ggvwx")
 
 [node name="PlayerWSlide" type="Node2D" parent="StateMachine"]
 script = ExtResource("9_6lm6p")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -32)
+process_callback = 0
+position_smoothing_enabled = true

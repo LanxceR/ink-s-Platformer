@@ -12,7 +12,7 @@ public partial class InputBuffer : Node
     /// How many milliseconds ahead of time the player can make an input and have it still be recognized.
     /// 0.083 = ~5 frames in 60 fps.
     /// </summary>
-    private static readonly double BUFFER_WINDOW = 0.1;
+    private static readonly double BUFFER_WINDOW = 0.083;
 
     /// <summary>
     /// Godot has a 0.5f default deadzone.

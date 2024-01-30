@@ -16,7 +16,7 @@ public partial class PlayerAir : PlayerState
 
     private bool _jumpOnEnter = false;
     private bool _canWallJump = false;
-    private bool _checkJumpInput;
+    private bool _checkInput;
 
     public override void Enter(Dictionary _msg = null)
     {
@@ -32,7 +32,7 @@ public partial class PlayerAir : PlayerState
                 _canWallJump = true;
         }
 
-        _checkJumpInput = true;
+        _checkInput = true;
         _airJumpsCounter = player.moveData.airJumps;
     }
 
@@ -64,8 +64,8 @@ public partial class PlayerAir : PlayerState
     #region Methods
     private void HandleJump(Vector2 velocity)
     {
-        bool nearWallLeft = player.TestMove(player.GlobalTransform, Vector2.Left * 2);
-        bool nearWallRight = player.TestMove(player.GlobalTransform, Vector2.Right * 2);
+        bool nearWallLeft = player.TestMove(player.GlobalTransform, Vector2.Left * 3);
+        bool nearWallRight = player.TestMove(player.GlobalTransform, Vector2.Right * 3);
         int wallNormalX = nearWallLeft
             ? 1
             : nearWallRight
@@ -79,10 +79,10 @@ public partial class PlayerAir : PlayerState
             // Jump
             velocity.Y = player.moveData.jumpVelocity;
             _jumpOnEnter = false;
-            _checkJumpInput = false;
+            _checkInput = false;
         }
         // Jump key is pressed when falling/mid-air.
-        else if (InputBuffer.IsActionJustPressed("jump") && _checkJumpInput)
+        else if (InputBuffer.IsActionJustPressed("jump") && _checkInput)
         {
             if (wallNormalX != 0)
             {
@@ -93,7 +93,7 @@ public partial class PlayerAir : PlayerState
                     player.moveData.wJumpYSpeed
                 );
                 EmitSignal(SignalName.WallJump, false, new Vector2(wallNormalX, 0));
-                _checkJumpInput = false;
+                _checkInput = false;
             }            
             else if (player.coyoteTimer.TimeLeft > 0)
             {
@@ -102,7 +102,7 @@ public partial class PlayerAir : PlayerState
                 velocity.Y = player.moveData.jumpVelocity;
                 player.coyoteTimer.Stop();
                 _jumpOnEnter = false;
-                _checkJumpInput = false;
+                _checkInput = false;
             }
             else if (_airJumpsCounter > 0)
             {
@@ -110,7 +110,7 @@ public partial class PlayerAir : PlayerState
                 // Jump at 0.8x velocity.
                 velocity.Y = player.moveData.jumpVelocity * 0.8f;
                 _airJumpsCounter--;
-                _checkJumpInput = false;
+                _checkInput = false;
             }
         }
 
@@ -118,7 +118,7 @@ public partial class PlayerAir : PlayerState
         if (Input.IsActionJustReleased("jump") && velocity.Y < 0)
         {
             velocity.Y /= 2;
-            _checkJumpInput = true;
+            _checkInput = true;
         }
 
         player.Velocity = velocity;
@@ -138,7 +138,7 @@ public partial class PlayerAir : PlayerState
     {
         // TODO: Maybe implement wall jump based off of proximity to walls instead?
         // Wall Slide
-        if (player.IsOnWall() && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X)
+        if (player.IsOnWall() && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X && _checkInput)
             stateMachine.TransitionTo(
                 nameof(PlayerWSlide),
                 new Dictionary { ["inputAxis"] = inputAxis }

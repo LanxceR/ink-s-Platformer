@@ -12,14 +12,15 @@ config_version=5
 
 config/name="ink's Platformer"
 config/tags=PackedStringArray("2d", "personal", "portfolio")
-run/main_scene="res://scenes/levels/test_world/test_world.tscn"
+run/main_scene="res://game/levels/test_world/test_world.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 boot_splash/show_image=false
 config/icon="res://assets/ink/Icon.png"
 
 [autoload]
 
-InputBuffer="*res://src/InputBuffer.cs"
+InputBuffer="*res://autoloads/InputBuffer.cs"
+Events="*res://autoloads/Events.cs"
 
 [display]
 
@@ -133,6 +134,12 @@ shoot_p2={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Hazard"
 
 [rendering]
 

@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://diqbuiwgwqqr0"]
+
+[ext_resource type="Script" path="res://game/levels/test_world/TestWorld.cs" id="1_1dftx"]
+[ext_resource type="PackedScene" uid="uid://s77m84uui5tu" path="res://game/characters/player/player.tscn" id="2_y80xx"]
+[ext_resource type="PackedScene" uid="uid://bs4c36vo585ts" path="res://game/levels/test_world/test_tile_map.tscn" id="3_ho4mj"]
+[ext_resource type="Texture2D" uid="uid://ctjk37hpw7idg" path="res://assets/gizmos/Measurements.png" id="3_r5nul"]
+[ext_resource type="PackedScene" uid="uid://cocv43ht28b3c" path="res://game/objects/hazards/spikes/spikes.tscn" id="4_lq7l1"]
+[ext_resource type="PackedScene" uid="uid://b77t0tsmuxo4g" path="res://game/objects/collectibles/hearts/heart.tscn" id="5_ey425"]
+[ext_resource type="PackedScene" uid="uid://08uxhemth7dk" path="res://game/interface/level_complete/level_completed.tscn" id="6_eohmk"]
+
+[node name="TestWorld" type="Node2D" node_paths=PackedStringArray("_levelCompletedScreen")]
+script = ExtResource("1_1dftx")
+_levelCompletedScreen = NodePath("CanvasLayer/LevelCompleted")
+
+[node name="V Measure" type="Sprite2D" parent="."]
+z_index = -99
+position = Vector2(-24, 60)
+rotation = -1.57079
+texture = ExtResource("3_r5nul")
+
+[node name="TestTileMap" parent="." instance=ExtResource("3_ho4mj")]
+layer_0/tile_data = PackedInt32Array(-262144, 131072, 0, -196608, 131072, 1, -131072, 131072, 1, -65536, 131072, 1, 0, 131072, 1, 65536, 131072, 1, 131072, 131072, 1, 196608, 131072, 1, 262144, 131072, 1, 327680, 131072, 1, 393216, 327680, 2, 458752, 65536, 1, 524288, 65536, 1, 589824, 65536, 2, 589825, 65536, 2, 524289, 65536, 1, 458753, 65536, 1, 458754, 327680, 2, 524290, 65536, 1, 589826, 65536, 2, 393217, 65536, 0, 393218, 131072, 0, 524291, 65536, 1, 589827, 65536, 2, 589828, 65536, 2, 589829, 65536, 2, 589830, 65536, 2, 589831, 327680, 3, 589832, 65536, 3, 524295, 458752, 2, 524294, 65536, 0, 524293, 65536, 0, 524292, 327680, 2, 458759, 196608, 0, 589833, 65536, 3, 589834, 393216, 3, 524298, 0, 1, 458762, 0, 0, 524299, 65536, 1, 589835, 65536, 2, 589836, 65536, 2, 589837, 65536, 2, 589838, 65536, 2, 524302, 327680, 2, 524301, 65536, 1, 524300, 65536, 1, 589839, 65536, 2, 589840, 65536, 2, -196609, 0, 0, -131073, 0, 1, -65537, 0, 1, -1, 0, 1, 65535, 0, 1, 131071, 0, 1, 196607, 0, 1, 262143, 0, 1, 327679, 0, 1, 393215, 0, 1, 458751, 0, 1, 524287, 0, 1, 589823, 0, 1, 655359, 0, 2, 458763, 65536, 0, 458764, 65536, 0, 458756, 131072, 0, 458755, 65536, 0, -262127, 0, 0, -196591, 0, 1, -131055, 0, 1, -65519, 0, 1, 17, 0, 1, 65553, 0, 1, 131089, 0, 1, 196625, 0, 1, 262161, 0, 1, 327697, 0, 1, 393233, 0, 1, 458769, 0, 1, 524305, 393216, 2, 589841, 65536, 2, 589842, 131072, 2, 524306, 131072, 1, 458770, 131072, 1, 393234, 131072, 1, 327698, 131072, 1, 262162, 131072, 1, 196626, 131072, 1, 131090, 131072, 1, 65554, 131072, 1, 18, 131072, 1, -65518, 131072, 1, -131054, 131072, 1, -196590, 131072, 1, -262126, 131072, 0, 524303, 65536, 0, 524304, 65536, 0, 458765, 65536, 0, -196595, 0, 0, -131059, 0, 1, -65523, 0, 1, 13, 0, 1, 65549, 0, 1, 131085, 0, 2, 65542, 0, 2, 65543, 65536, 2, 7, 65536, 1, 6, 0, 1, -65530, 0, 0, -65529, 65536, 0, 458766, 458752, 2, 393230, 196608, 0, -196594, 131072, 0, -131058, 131072, 1, -65522, 131072, 1, 14, 131072, 1, 65550, 131072, 1, 131086, 131072, 2, -65528, 131072, 0, 8, 131072, 1, 65544, 131072, 2)
+layer_1/tile_data = PackedInt32Array(393228, 196609, 0, 393229, 262145, 0, 393219, 393218, 0, 393218, 65536, 0, 458754, 65536, 1, 458755, 327682, 0, 393230, 131072, 0, 458765, 65536, 1, 458764, 327681, 0, 458766, 131072, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_y80xx")]
+position = Vector2(32, 48)
+
+[node name="Spikes" parent="." instance=ExtResource("4_lq7l1")]
+position = Vector2(128, 144)
+
+[node name="Spikes2" parent="." instance=ExtResource("4_lq7l1")]
+position = Vector2(144, 144)
+
+[node name="Spikes3" parent="." instance=ExtResource("4_lq7l1")]
+position = Vector2(240, 128)
+
+[node name="Spikes4" parent="." instance=ExtResource("4_lq7l1")]
+position = Vector2(256, 128)
+
+[node name="Heart" parent="." instance=ExtResource("5_ey425")]
+position = Vector2(256, 104)
+
+[node name="Heart2" parent="." instance=ExtResource("5_ey425")]
+position = Vector2(120, -24)
+
+[node name="Heart3" parent="." instance=ExtResource("5_ey425")]
+position = Vector2(96, 120)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelCompleted" parent="CanvasLayer" instance=ExtResource("6_eohmk")]
+visible = false
