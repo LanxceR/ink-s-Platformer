@@ -45,9 +45,13 @@ public partial class PlayerWSlide : PlayerState
     #region Change State
     private void CheckState(Vector2 inputAxis)
     {
-        // Jump or Letting Go
-        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X || InputBuffer.IsActionJustPressed("jump"))
+        // Let go
+        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X)
             stateMachine.TransitionTo(nameof(PlayerAir));
+
+        // Wall jump
+        if (InputBuffer.IsActionJustPressed("jump"))
+            stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["doJump"] = true });
 
         // Landing
         if (player.IsOnFloor())

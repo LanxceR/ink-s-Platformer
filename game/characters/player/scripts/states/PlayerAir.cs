@@ -15,7 +15,6 @@ public partial class PlayerAir : PlayerState
     private int _airJumpsCounter;
 
     private bool _jumpOnEnter = false;
-    private bool _checkInput;
 
     public override void Enter(Dictionary _msg = null)
     {
@@ -29,7 +28,6 @@ public partial class PlayerAir : PlayerState
                 _jumpOnEnter = true;
         }
 
-        _checkInput = true;
         _airJumpsCounter = player.moveData.airJumps;
     }
 
@@ -69,19 +67,18 @@ public partial class PlayerAir : PlayerState
                 ? -1
                 : 0;
 
-        // Jump key has already been pressed from state transition.
-        if (_jumpOnEnter)
+        if (Input.IsActionJustPressed("jump") || _jumpOnEnter)
         {
-            GD.Print("Jump");
-            // Jump
-            velocity.Y = player.moveData.jumpVelocity;
-            _jumpOnEnter = false;
-            _checkInput = false;
-        }
-        // Jump key is pressed when falling/mid-air.
-        else if (InputBuffer.IsActionJustPressed("jump") && _checkInput)
-        {
-            if (wallNormalX != 0)
+            if (player.IsOnFloor())
+            {
+                GD.Print("Jump");
+                // Jump (NOTE: This if branch is visited when the player is entering PlayerAir from the ground,
+                // meaning that entering PlayerAir DOES NOT mean that the player is in the air, just about to be.)
+                velocity.Y = player.moveData.jumpVelocity;
+                player.coyoteTimer.Stop();
+                _jumpOnEnter = false;
+            }
+            else if (wallNormalX != 0)
             {
                 GD.Print("Wall Jump");
                 // Wall Jump by proximity.
@@ -89,9 +86,9 @@ public partial class PlayerAir : PlayerState
                     wallNormalX * player.moveData.wJumpXSpeed,
                     player.moveData.wJumpYSpeed
                 );
+                _jumpOnEnter = false;
                 EmitSignal(SignalName.WallJump, false, new Vector2(wallNormalX, 0));
-                _checkInput = false;
-            }            
+            }
             else if (player.coyoteTimer.TimeLeft > 0)
             {
                 GD.Print("Coyote Jump");
@@ -99,15 +96,13 @@ public partial class PlayerAir : PlayerState
                 velocity.Y = player.moveData.jumpVelocity;
                 player.coyoteTimer.Stop();
                 _jumpOnEnter = false;
-                _checkInput = false;
             }
-            else if (_airJumpsCounter > 0)
+            else if (_airJumpsCounter > 0 && !_jumpOnEnter)
             {
                 GD.Print("Air Jump");
                 // Jump at 0.8x velocity.
                 velocity.Y = player.moveData.jumpVelocity * 0.8f;
                 _airJumpsCounter--;
-                _checkInput = false;
             }
         }
 
@@ -115,7 +110,6 @@ public partial class PlayerAir : PlayerState
         if (Input.IsActionJustReleased("jump") && velocity.Y < 0)
         {
             velocity.Y /= 2;
-            _checkInput = true;
         }
 
         player.Velocity = velocity;
@@ -134,7 +128,11 @@ public partial class PlayerAir : PlayerState
     private void CheckState(Vector2 inputAxis)
     {
         // Wall Slide
-        if (player.IsOnWallOnly() && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X && player.Velocity.Y > 0)
+        if (
+            player.IsOnWallOnly()
+            && Mathf.Sign(inputAxis.X) == -player.GetWallNormal().X
+            && player.Velocity.Y > 0
+        )
             stateMachine.TransitionTo(
                 nameof(PlayerWSlide),
                 new Dictionary { ["inputAxis"] = inputAxis }

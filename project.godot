@@ -37,6 +37,11 @@ project/assembly_name="ink-s Platformer"
 
 [gui]
 
+theme/custom="res://game/interface/themes/default_theme.tres"
+theme/custom_font="res://assets/heart_plat template/pixel_font.ttf"
+theme/default_font_antialiasing=0
+theme/default_font_hinting=0
+theme/default_font_subpixel_positioning=0
 timers/tooltip_delay_sec=0.05
 
 [input]

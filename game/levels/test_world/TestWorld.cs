@@ -15,9 +15,6 @@ public partial class TestWorld : Node
     {
         GD.Print("Hello C#!");
 
-        // Set clear background to black.
-        RenderingServer.SetDefaultClearColor(new Color(0, 0, 0, 1));
-
         // Connect to Events autoload signal for level complete
         GetNode<Events>("/root/Events").LevelCompleted += OnLevelComplete;
     }
@@ -34,7 +31,7 @@ public partial class TestWorld : Node
             return;
 
         GetTree().Paused = true;
-        await WaitClass.Wait(this, 1f);
+        await ToSignal(GetTree().CreateTimer(1f), Timer.SignalName.Timeout);
         LevelTransition lt = GetNode<LevelTransition>("/root/LevelTransition");
         await lt.FadeToBlack();
         GetTree().Paused = false;

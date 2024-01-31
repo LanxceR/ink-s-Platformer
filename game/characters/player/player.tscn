@@ -100,6 +100,7 @@ size = Vector2(6, 13)
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("coyoteTimer", "wallJumpRecoveryTimer", "hazardDetectionArea", "stateMachine", "animSprite2D")]
 collision_layer = 2
 floor_snap_length = 3.0
+safe_margin = 0.1
 script = ExtResource("1_2j7g2")
 moveData = ExtResource("2_i25yi")
 coyoteTimer = NodePath("CoyoteJumpTimer")
