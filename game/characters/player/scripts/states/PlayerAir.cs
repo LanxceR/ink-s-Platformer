@@ -15,7 +15,6 @@ public partial class PlayerAir : PlayerState
     private int _airJumpsCounter;
 
     private bool _jumpOnEnter = false;
-    private bool _canWallJump = false;
     private bool _checkInput;
 
     public override void Enter(Dictionary _msg = null)
@@ -28,8 +27,6 @@ public partial class PlayerAir : PlayerState
                 player.coyoteTimer.Start();
             if (_msg.ContainsKey("doJump"))
                 _jumpOnEnter = true;
-            if (_msg.ContainsKey("wallJump"))
-                _canWallJump = true;
         }
 
         _checkInput = true;
@@ -41,7 +38,7 @@ public partial class PlayerAir : PlayerState
         player.ApplyGravity(player.Velocity, _delta);
         HandleJump(player.Velocity);
 
-        Vector2 inputAxis = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
+        Vector2 inputAxis = new Vector2(Input.GetAxis("move_left", "move_right"), 0);
         player.HandleAccelerationX(
             player.Velocity,
             inputAxis,

@@ -5,5 +5,14 @@ https://www.youtube.com/playlist?list=PL9FzW-m48fn0i9GYBoTY-SI3yOBZjH1kJ
 drkitt & johnnyneverwalked
 https://github.com/drkitt/godot-input-buffer
 
+GDQuest
+https://www.gdquest.com/tutorial/godot/design-patterns/finite-state-machine/
+
+blubberdiblub
+Debug Assert() function
+
+Ryhon0 / RyhonPL
+Boilerplate async Wait() function
+
 Maddy Makes Games
 Celeste

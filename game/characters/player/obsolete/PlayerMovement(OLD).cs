@@ -32,7 +32,7 @@ public partial class PlayerMovement : CharacterBody2D
         if (!HandleWallJump(Velocity))
             HandleJump(Velocity);
             
-        Vector2 inputAxis = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
+        Vector2 inputAxis = new Vector2(Input.GetAxis("move_left", "move_right"), 0);
         HandleAccelerationX(Velocity, inputAxis, delta);
         HandleDecelerationX(Velocity, inputAxis, delta);
         UpdateAnimation(inputAxis);

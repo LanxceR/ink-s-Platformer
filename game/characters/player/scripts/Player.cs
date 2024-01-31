@@ -137,7 +137,7 @@ public partial class Player : CharacterBody2D
         _forceMoveX = true;
         _shortWallJump = shortWallJump;
         _wallNormal = wallNormal;
-    }    
+    }
 
     private void OnHazardEntered(Area2D area)
     {

@@ -15,7 +15,7 @@ public partial class TestWorld : Node
     {
         GD.Print("Hello C#!");
 
-        // Set clear background to black
+        // Set clear background to black.
         RenderingServer.SetDefaultClearColor(new Color(0, 0, 0, 1));
 
         // Connect to Events autoload signal for level complete
@@ -39,7 +39,7 @@ public partial class TestWorld : Node
         await lt.FadeToBlack();
         GetTree().Paused = false;
 
-        // Disconnect from signals
+        // Disconnect from signals.
         GetNode<Events>("/root/Events").LevelCompleted -= OnLevelComplete;
         GetTree().ChangeSceneToPacked(_nextLevelScene);
         await lt.FadeFromBlack();

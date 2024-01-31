@@ -16,7 +16,7 @@ public partial class PlayerRun : PlayerState
     {
         player.ApplyGravity(player.Velocity, _delta);
 
-        Vector2 inputAxis = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
+        Vector2 inputAxis = new Vector2(Input.GetAxis("move_left", "move_right"), 0);
         player.HandleAccelerationX(
             player.Velocity,
             inputAxis,

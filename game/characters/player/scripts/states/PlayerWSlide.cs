@@ -20,7 +20,7 @@ public partial class PlayerWSlide : PlayerState
 
     public override void PhysicsProcess(double _delta)
     {
-        Vector2 inputAxis = Input.GetVector("move_left", "move_right", "ui_up", "ui_down");
+        Vector2 inputAxis = new Vector2(Input.GetAxis("move_left", "move_right"), 0);
 
         HandleWallSlide(inputAxis, _delta);
 
@@ -45,12 +45,9 @@ public partial class PlayerWSlide : PlayerState
     #region Change State
     private void CheckState(Vector2 inputAxis)
     {
-        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X)
+        // Jump or Letting Go
+        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X || InputBuffer.IsActionJustPressed("jump"))
             stateMachine.TransitionTo(nameof(PlayerAir));
-
-        // Jump to Air
-        if (InputBuffer.IsActionJustPressed("jump"))
-            stateMachine.TransitionTo(nameof(PlayerAir), new Dictionary { ["wallJump"] = true });
 
         // Landing
         if (player.IsOnFloor())
