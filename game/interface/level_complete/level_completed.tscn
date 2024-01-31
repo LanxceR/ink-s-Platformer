@@ -1,12 +1,18 @@
-[gd_scene format=3 uid="uid://08uxhemth7dk"]
+[gd_scene load_steps=2 format=3 uid="uid://08uxhemth7dk"]
 
-[node name="LevelCompleted" type="ColorRect"]
+[ext_resource type="Script" path="res://game/interface/level_complete/LevelCompleted.cs" id="1_733ix"]
+
+[node name="LevelCompleted" type="ColorRect" node_paths=PackedStringArray("_retryBtn", "nextLevelBtn")]
+process_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.25098)
+script = ExtResource("1_733ix")
+_retryBtn = NodePath("CenterContainer/VBoxContainer/HBoxContainer/RetryBtn")
+nextLevelBtn = NodePath("CenterContainer/VBoxContainer/HBoxContainer/NextLevelBtn")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -16,6 +22,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Level Completed!"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="RetryBtn" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+text = "Retry"
+
+[node name="NextLevelBtn" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+text = "Next Level"

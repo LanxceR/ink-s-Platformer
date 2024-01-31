@@ -13,11 +13,16 @@ public partial class StartMenu : CenterContainer
     [Export]
     private Button _quitGameBtn;
 
+    private LevelTransition _levelTransition;
+
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public override async void _Ready()
     {
         // Set clear background to black.
         RenderingServer.SetDefaultClearColor(new Color(0, 0, 0, 1));
+
+        _levelTransition = GetNode<LevelTransition>("/root/LevelTransition");
+        await _levelTransition.FadeFromBlack();
 
         _startGameBtn.Pressed += OnStartGameAsync;
         _quitGameBtn.Pressed += OnQuitGame;
@@ -29,10 +34,9 @@ public partial class StartMenu : CenterContainer
         if (_startGameScene is not PackedScene)
             return;
 
-        LevelTransition lt = GetNode<LevelTransition>("/root/LevelTransition");
-        await lt.FadeToBlack();
+        await _levelTransition.FadeToBlack();
         GetTree().ChangeSceneToPacked(_startGameScene);
-        await lt.FadeFromBlack();
+        await _levelTransition.FadeFromBlack();
     }
 
     private void OnQuitGame()
