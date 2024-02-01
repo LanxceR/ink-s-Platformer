@@ -34,8 +34,10 @@ public partial class PlayerWSlide : PlayerState
             player.ApplyGravity(
                 player.Velocity,
                 delta,
-                player.moveData.wSlideGravScale,
-                player.moveData.wSlideClingDuration
+                player.moveData.wSlideStrongGravScale,
+                player.moveData.wSlideStrongDuration,
+                player.moveData.wSlideInitialMaxFallSpeed,
+                player.moveData.wSlideDuration
             );
     }
     #endregion
@@ -44,7 +46,7 @@ public partial class PlayerWSlide : PlayerState
     private void CheckState(Vector2 inputAxis)
     {
         // Let go
-        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X)
+        if (Mathf.Sign(inputAxis.X) != -_wallNormal.X || !player.IsOnWallOnly())
             stateMachine.TransitionTo(nameof(PlayerAir));
 
         // Wall jump

@@ -45,7 +45,7 @@ public partial class TestWorld : Node
         _levelCompletedScreen.NextLevel += GoToNextLevel;
 
         GetTree().Paused = true;
-        await _levelTransition.FadeFromBlack();
+        _levelTransition.FadeFromBlack();
         _startCountAnimPlayer.Play("countdown");
         await ToSignal(_startCountAnimPlayer, AnimationPlayer.SignalName.AnimationFinished);
         GetTree().Paused = false;

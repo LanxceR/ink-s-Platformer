@@ -4,9 +4,6 @@ using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
-    //TODO: Make a separate animation class/script that listens to state changes that can wait for other animations to finish first.
-    //TODO: Try AnimationPlayer.
-
     #region Exported Variables
     [ExportGroup("Movement")]
     [Export]
@@ -25,6 +22,7 @@ public partial class Player : CharacterBody2D
     [ExportGroup("Animations")]
     [Export]
     public AnimationPlayer animPlayer;
+
     [Export]
     public Sprite2D sprite2D;
 
@@ -69,25 +67,38 @@ public partial class Player : CharacterBody2D
     /// </summary>
     /// <param name="velocity">Current velocity.</param>
     /// <param name="delta">Physics process delta.</param>
-    /// <param name="mult">(Optional) Gravity multiplier. Defaults to <c>1</c>.</param>
-    /// <param name="multDuration">(Optional) Duration in seconds of 
+    /// <param name="mult">(Optional) Gravity multiplier. Defaults to <c>1f</c>.</param>
+    /// <param name="multDuration">(Optional) Duration in seconds of
     /// which said multiplier is applied.</param>
+    /// <param name="maxCap">(Optional) Max fall cap. Defaults to <c>0f</c>, meaning default max fall speed.</param>
+    /// <param name="maxCapDuration">(Optional) Duration in which maxCap gradually recovers to default max fall speed. Defaults to <c>0f</c>.</param>
     /// <returns>Returns <c>true</c> if player is at max fall velocity, otherwise <c>false</c>.</returns>
     public bool ApplyGravity(
         Vector2 velocity,
         double delta,
         float mult = 1f,
-        float multDuration = 0f
+        float multDuration = 0f,
+        float maxCap = 0f,
+        float maxCapDuration = 0f
     )
     {
+        // Apparently Celeste uses .5 gravity for the first couple of moments before Y 
+        // speed reaches 20, creating a non-perfect parabola curve. Something to think 
+        // about.
         float grav = gravity * moveData.gravityScale;
         float modGravThreshold = grav * mult * multDuration;
         float normalGrav = grav * (float)delta;
         float finalGrav =
             velocity.Y < modGravThreshold && modGravThreshold != 0 ? normalGrav * mult : normalGrav;
 
+        float amtToAdd = (moveData.maxFallSpeed - maxCap) * (float)delta / maxCapDuration;
+        float maxFall =
+            maxCap != 0f &&  velocity.Y >= maxCap
+                ? Mathf.MoveToward(velocity.Y, moveData.maxFallSpeed, amtToAdd)
+                : moveData.maxFallSpeed;
+
         if (!IsOnFloor())
-            velocity.Y = Mathf.MoveToward(velocity.Y, moveData.maxFallSpeed, finalGrav);
+            velocity.Y = Mathf.MoveToward(velocity.Y, maxFall, finalGrav);
         Velocity = velocity;
 
         if (Velocity.Y >= moveData.maxFallSpeed)
