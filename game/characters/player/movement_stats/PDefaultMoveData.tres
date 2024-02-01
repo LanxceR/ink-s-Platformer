@@ -4,13 +4,14 @@
 
 [resource]
 script = ExtResource("1_6503v")
-speed = 100.0
+maxSpeed = 100.0
 groundAcceleration = 1200.0
 groundDeceleration = 1200.0
-airAcceleration = 400.0
+airAcceleration = 600.0
 airDeceleration = 900.0
 jumpVelocity = -260.0
 gravityScale = 1.0
+maxFallSpeed = 200.0
 wSlideGravScale = 0.1
 wSlideClingDuration = 0.5
 wJumpXSpeed = 140.0

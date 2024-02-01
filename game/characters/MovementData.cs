@@ -8,7 +8,7 @@ public partial class MovementData : Resource
     /// Velocity in pixels per second.
     /// </summary>
     [Export]
-    public float speed = 100.0f;
+    public float maxSpeed = 100.0f;
 
     /// <summary>
     /// Acceleration in <c>px/s^2</c>, on the ground.
@@ -26,7 +26,7 @@ public partial class MovementData : Resource
     /// Acceleration in <c>px/s^2</c>, in the air.
     /// </summary>
     [Export]
-    public float airAcceleration = 400.0f;
+    public float airAcceleration = 600.0f;
 
     /// <summary>
     /// Deceleration/friction in <c>px/s^2</c>, in the air.
@@ -48,6 +48,12 @@ public partial class MovementData : Resource
     public float gravityScale = 1f;
 
     /// <summary>
+    /// Maximum fall speed.
+    /// </summary>
+    [Export]
+    public float maxFallSpeed = 200f;
+
+    /// <summary>
     /// Wall slide gravity scale.
     /// </summary>
     [Export]
@@ -60,19 +66,19 @@ public partial class MovementData : Resource
     public float wSlideClingDuration = .5f;
 
     /// <summary>
-    /// Wall slide cling duration.
+    /// Wall jump horizontal speed.
     /// </summary>
     [Export]
     public float wJumpXSpeed = 140.0f;
 
     /// <summary>
-    /// Wall slide cling duration.
+    /// Wall jump vertical speed.
     /// </summary>
     [Export]
     public float wJumpYSpeed = -260.0f;
 
     /// <summary>
-    /// Gravity scale.
+    /// Midair jumps.
     /// </summary>
     [Export]
     public int airJumps = 0;

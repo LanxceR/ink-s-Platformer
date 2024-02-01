@@ -10,8 +10,6 @@ public partial class PlayerWSlide : PlayerState
     public override void Enter(Dictionary _msg = null)
     {
         // TODO: Animation here
-        //GD.Print("Wall Slide");
-
         _wallNormal = player.GetWallNormal();
 
         // Reset Y velocity to prevent player from jumping after letting go of wall

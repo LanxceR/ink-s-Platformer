@@ -57,14 +57,23 @@ public partial class Player : CharacterBody2D
     }
 
     #region Methods
-    public void ApplyGravity(
+    /// <summary>
+    /// Applies gravity to the player by adding Y velocity according to gravity
+    /// acceleration value. Use <c>physics_process</c> for this.
+    /// </summary>
+    /// <param name="velocity">Current velocity.</param>
+    /// <param name="delta">Physics process delta.</param>
+    /// <param name="mult">(Optional) Gravity multiplier. Defaults to <c>1</c>.</param>
+    /// <param name="multDuration">(Optional) Duration in seconds of 
+    /// which said multiplier is applied.</param>
+    /// <returns>Returns <c>true</c> if player is at max fall velocity, otherwise <c>false</c>.</returns>
+    public bool ApplyGravity(
         Vector2 velocity,
         double delta,
         float mult = 1f,
         float multDuration = 0f
     )
     {
-        // TODO?: Implement terminal velocity (MaxFall).
         float grav = gravity * moveData.gravityScale;
         float modGravThreshold = grav * mult * multDuration;
         float normalGrav = grav * (float)delta;
@@ -72,8 +81,13 @@ public partial class Player : CharacterBody2D
             velocity.Y < modGravThreshold && modGravThreshold != 0 ? normalGrav * mult : normalGrav;
 
         if (!IsOnFloor())
-            velocity.Y += finalGrav;
+            velocity.Y = Mathf.MoveToward(velocity.Y, moveData.maxFallSpeed, finalGrav);
         Velocity = velocity;
+
+        if (Velocity.Y >= moveData.maxFallSpeed)
+            return true;
+        else
+            return false;
     }
 
     public void HandleAccelerationX(
@@ -88,7 +102,7 @@ public partial class Player : CharacterBody2D
             // Recovering from wall slide jump.
             velocity.X = Mathf.MoveToward(
                 velocity.X,
-                _wallNormal.X * moveData.speed,
+                _wallNormal.X * moveData.maxSpeed,
                 acceleration * (float)delta
             );
         }
@@ -97,7 +111,7 @@ public partial class Player : CharacterBody2D
             _forceMoveX = false;
             velocity.X = Mathf.MoveToward(
                 velocity.X,
-                input_axis.X * moveData.speed,
+                input_axis.X * moveData.maxSpeed,
                 acceleration * (float)delta
             );
         }

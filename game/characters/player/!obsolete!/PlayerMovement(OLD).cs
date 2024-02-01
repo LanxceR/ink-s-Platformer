@@ -68,7 +68,7 @@ public partial class PlayerMovement : CharacterBody2D
 
         if (InputBuffer.IsActionJustPressed("jump") || _jumpBufferTimer.TimeLeft > 0)
         {
-            velocity = new Vector2(wallNormal.X * _movementData.speed, _movementData.jumpVelocity);
+            velocity = new Vector2(wallNormal.X * _movementData.maxSpeed, _movementData.jumpVelocity);
             GD.Print("Wall Jumped");
         }
 
@@ -116,13 +116,13 @@ public partial class PlayerMovement : CharacterBody2D
             if (IsOnFloor())
                 velocity.X = Mathf.MoveToward(
                     velocity.X,
-                    input_axis.X * _movementData.speed,
+                    input_axis.X * _movementData.maxSpeed,
                     _movementData.groundAcceleration * (float)delta
                 );
             else
                 velocity.X = Mathf.MoveToward(
                     velocity.X,
-                    input_axis.X * _movementData.speed,
+                    input_axis.X * _movementData.maxSpeed,
                     _movementData.airAcceleration * (float)delta
                 );
         }
