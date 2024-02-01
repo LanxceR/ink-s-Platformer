@@ -4,6 +4,9 @@ using System.Linq;
 
 public partial class Player : CharacterBody2D
 {
+    //TODO: Make a separate animation class/script that listens to state changes that can wait for other animations to finish first.
+    //TODO: Try AnimationPlayer.
+
     #region Exported Variables
     [ExportGroup("Movement")]
     [Export]
@@ -19,12 +22,15 @@ public partial class Player : CharacterBody2D
     [Export]
     public Area2D hazardDetectionArea;
 
+    [ExportGroup("Animations")]
+    [Export]
+    public AnimationPlayer animPlayer;
+    [Export]
+    public Sprite2D sprite2D;
+
     [ExportGroup("Misc")]
     [Export]
     public StateMachine stateMachine;
-
-    [Export]
-    public AnimatedSprite2D animSprite2D;
     #endregion
 
     private Node[] _childNodes;

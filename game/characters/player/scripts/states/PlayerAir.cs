@@ -18,8 +18,6 @@ public partial class PlayerAir : PlayerState
 
     public override void Enter(Dictionary _msg = null)
     {
-        player.animSprite2D.Play("jump");
-
         if (_msg != null)
         {
             if (_msg.ContainsKey("coyoteTime"))
@@ -50,8 +48,8 @@ public partial class PlayerAir : PlayerState
             player.moveData.airDeceleration
         );
 
-        UpdateAnim(inputAxis);
         player.MoveAndSlide();
+        UpdateAnim(inputAxis);
 
         CheckState(inputAxis);
     }
@@ -119,7 +117,20 @@ public partial class PlayerAir : PlayerState
     {
         if (inputAxis.X != 0)
         {
-            player.animSprite2D.FlipH = inputAxis.X < 0;
+            player.sprite2D.FlipH = inputAxis.X < 0;
+        }
+
+        if (player.Velocity.Y < 0 && player.animPlayer.CurrentAnimation != "jump")
+        {
+            player.animPlayer.Play("jump");
+        }
+        else if (player.Velocity.Y > 0 && player.animPlayer.CurrentAnimation != "fall")
+        {
+            player.animPlayer.Play("fall");
+        }
+        else if (player.IsOnFloor() && player.animPlayer.CurrentAnimation != "land")
+        {
+            player.animPlayer.Play("land");
         }
     }
     #endregion
@@ -142,9 +153,15 @@ public partial class PlayerAir : PlayerState
         if (player.IsOnFloor())
         {
             if (Mathf.IsEqualApprox(inputAxis.X, 0))
-                stateMachine.TransitionTo(nameof(PlayerIdle));
+                stateMachine.TransitionTo(
+                    nameof(PlayerIdle),
+                    new Dictionary { ["land"] = player.animPlayer.CurrentAnimation }
+                );
             else
-                stateMachine.TransitionTo(nameof(PlayerRun));
+                stateMachine.TransitionTo(
+                    nameof(PlayerRun),
+                    new Dictionary { ["land"] = player.animPlayer.CurrentAnimation }
+                );
         }
     }
     #endregion

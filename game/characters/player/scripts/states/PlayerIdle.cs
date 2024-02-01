@@ -9,7 +9,15 @@ public partial class PlayerIdle : PlayerState
 {
     public override void Enter(Dictionary _msg = null)
     {
-        player.animSprite2D.Play("idle");
+        player.animPlayer.AnimationFinished += LoopAnim;
+
+        if (_msg != null)
+        {
+            if (_msg.ContainsKey("land"))
+                player.animPlayer.Queue("idle");
+        }
+        else
+            player.animPlayer.Play("idle");
     }
 
     public override void PhysicsProcess(double _delta)
@@ -29,6 +37,18 @@ public partial class PlayerIdle : PlayerState
 
         CheckState();
     }
+
+    public override void Exit()
+    {
+        player.animPlayer.AnimationFinished -= LoopAnim;
+    }
+
+    #region Methods
+    private void LoopAnim(StringName animName)
+    {
+        player.animPlayer.Play("idle");
+    }
+    #endregion
 
     #region Change State
     private void CheckState()

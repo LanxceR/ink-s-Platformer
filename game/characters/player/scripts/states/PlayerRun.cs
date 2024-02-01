@@ -9,7 +9,15 @@ public partial class PlayerRun : PlayerState
 {
     public override void Enter(Dictionary _msg = null)
     {
-        player.animSprite2D.Play("run");
+        player.animPlayer.AnimationFinished += LoopAnim;
+
+        if (_msg != null)
+        {
+            if (_msg.ContainsKey("land"))
+                player.animPlayer.Queue("run");
+        }
+        else
+            player.animPlayer.Play("run");
     }
 
     public override void PhysicsProcess(double _delta)
@@ -33,16 +41,27 @@ public partial class PlayerRun : PlayerState
         UpdateAnim(inputAxis);
         player.MoveAndSlide();
         player.HandleCoyoteTime();
-        
+
         CheckState(inputAxis);
     }
 
+    public override void Exit()
+    {
+        player.animPlayer.AnimationFinished -= LoopAnim;
+    }
+
     #region Methods
+
+    private void LoopAnim(StringName animName)
+    {
+        player.animPlayer.Play("run");
+    }
+
     private void UpdateAnim(Vector2 inputAxis)
     {
         if (inputAxis.X != 0)
         {
-            player.animSprite2D.FlipH = inputAxis.X < 0;
+            player.sprite2D.FlipH = inputAxis.X < 0;
         }
     }
     #endregion
