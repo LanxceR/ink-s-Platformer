@@ -25,8 +25,6 @@ public partial class PlayerAir : PlayerState
             if (_msg.ContainsKey("doJump"))
                 _jumpOnEnter = true;
         }
-
-        _airJumpsCounter = player.moveData.airJumps;
     }
 
     public override void PhysicsProcess(double _delta)
@@ -69,9 +67,9 @@ public partial class PlayerAir : PlayerState
         {
             if (player.IsOnFloor())
             {
+                // Jump (NOTE: The IsOnFloor() check is for when the player is entering PlayerAir from the ground,
+                // meaning that entering PlayerAir DOES NOT mean that the player is in the air (in this case it's on the ground for 1 frame in PlayerAir), just about to be.)
                 GD.Print("Jump");
-                // Jump (NOTE: This if branch is visited when the player is entering PlayerAir from the ground,
-                // meaning that entering PlayerAir DOES NOT mean that the player is in the air, just about to be.)
                 velocity.Y = player.moveData.jumpVelocity;
                 player.coyoteTimer.Stop();
                 _jumpOnEnter = false;
@@ -152,6 +150,7 @@ public partial class PlayerAir : PlayerState
         // Landing
         if (player.IsOnFloor())
         {
+            _airJumpsCounter = player.moveData.airJumps;
             if (Mathf.IsEqualApprox(inputAxis.X, 0))
                 stateMachine.TransitionTo(
                     nameof(PlayerIdle),

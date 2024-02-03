@@ -82,8 +82,8 @@ public partial class Player : CharacterBody2D
         float maxCapDuration = 0f
     )
     {
-        // Apparently Celeste uses .5 gravity for the first couple of moments before Y 
-        // speed reaches 20, creating a non-perfect parabola curve. Something to think 
+        // Apparently Celeste uses .5 gravity for the first couple of moments before Y
+        // speed reaches 20, creating a non-perfect parabola curve. Something to think
         // about.
         float grav = gravity * moveData.gravityScale;
         float modGravThreshold = grav * mult * multDuration;
@@ -93,7 +93,7 @@ public partial class Player : CharacterBody2D
 
         float amtToAdd = (moveData.maxFallSpeed - maxCap) * (float)delta / maxCapDuration;
         float maxFall =
-            maxCap != 0f &&  velocity.Y >= maxCap
+            maxCap != 0f && velocity.Y >= maxCap
                 ? Mathf.MoveToward(velocity.Y, moveData.maxFallSpeed, amtToAdd)
                 : moveData.maxFallSpeed;
 
@@ -158,7 +158,6 @@ public partial class Player : CharacterBody2D
         if (justLeftLedge)
         {
             coyoteTimer.Start();
-            //GD.Print("Coyote Time");
         }
     }
 
