@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://s77m84uui5tu"]
+[gd_scene load_steps=19 format=3 uid="uid://s77m84uui5tu"]
 
 [ext_resource type="Script" path="res://game/characters/player/scripts/Player.cs" id="1_2j7g2"]
 [ext_resource type="Resource" uid="uid://dt2f58ecetuvd" path="res://game/characters/player/movement_stats/PDefaultMoveData.tres" id="2_i25yi"]
@@ -23,6 +23,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [8]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 2)]
+}
 
 [sub_resource type="Animation" id="Animation_7mwbd"]
 resource_name = "fall"
@@ -39,6 +51,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_anw4u"]
@@ -57,6 +81,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [8, 9, 10, 11]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.333334, 0.500001),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 2), Vector2i(1, 2), Vector2i(2, 2), Vector2i(3, 2)]
+}
 
 [sub_resource type="Animation" id="Animation_sk02j"]
 resource_name = "jump"
@@ -73,6 +109,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_7jnf0"]
@@ -91,6 +139,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [6, 7]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(2, 1), Vector2i(3, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_tgun4"]
 resource_name = "run"
@@ -108,6 +168,47 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_w7tfw"]
+resource_name = "wall_slide"
+length = 0.166684
+step = 0.166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame_coords")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(0, 4)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bsclv"]
 _data = {
@@ -116,7 +217,8 @@ _data = {
 "idle": SubResource("Animation_anw4u"),
 "jump": SubResource("Animation_sk02j"),
 "land": SubResource("Animation_7jnf0"),
-"run": SubResource("Animation_tgun4")
+"run": SubResource("Animation_tgun4"),
+"wall_slide": SubResource("Animation_w7tfw")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iudhh"]
@@ -142,7 +244,7 @@ stateMachine = NodePath("StateMachine")
 position = Vector2(0, -10)
 texture = ExtResource("3_8u27w")
 hframes = 4
-vframes = 4
+vframes = 5
 frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]

@@ -9,7 +9,7 @@ public partial class PlayerWSlide : PlayerState
 
     public override void Enter(Dictionary _msg = null)
     {
-        // TODO: Animation here
+        player.animPlayer.Play("wall_slide");
         _wallNormal = player.GetWallNormal();
 
         // Reset Y velocity to prevent player from jumping after letting go of wall
@@ -23,6 +23,7 @@ public partial class PlayerWSlide : PlayerState
         HandleWallSlide(inputAxis, _delta);
 
         player.MoveAndSlide();
+        UpdateAnim(_wallNormal);
 
         CheckState(inputAxis);
     }
@@ -39,6 +40,14 @@ public partial class PlayerWSlide : PlayerState
                 player.moveData.wSlideInitialMaxFallSpeed,
                 player.moveData.wSlideDuration
             );
+    }    
+
+    private void UpdateAnim(Vector2 wallNormal)
+    {
+        if (wallNormal.X != 0)
+        {
+            player.sprite2D.FlipH = wallNormal.X > 0;
+        }
     }
     #endregion
 
