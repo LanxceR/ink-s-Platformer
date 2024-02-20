@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://clioj5k38earq"]
+
+[ext_resource type="PackedScene" uid="uid://b2h888sf5xi8h" path="res://game/levels/test_Tiled/testmap 0.tmx" id="1_n2eqg"]
+[ext_resource type="PackedScene" uid="uid://s77m84uui5tu" path="res://game/characters/player/player.tscn" id="2_g6mdn"]
+
+[node name="testmap 0" instance=ExtResource("1_n2eqg")]
+
+[node name="Player" parent="." index="2" instance=ExtResource("2_g6mdn")]
+position = Vector2(56, 64)

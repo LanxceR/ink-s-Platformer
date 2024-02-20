@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://game/levels/test_world/TestWorld.cs" id="1_rhjva"]
 [ext_resource type="Texture2D" uid="uid://ctjk37hpw7idg" path="res://assets/gizmos/Measurements.png" id="2_yw8w1"]
-[ext_resource type="PackedScene" uid="uid://bs4c36vo585ts" path="res://game/levels/test_world/test_tile_map.tscn" id="3_vxxve"]
+[ext_resource type="PackedScene" uid="uid://bs4c36vo585ts" path="res://game/tilemaps/test_tile_map.tscn" id="3_vxxve"]
 [ext_resource type="PackedScene" uid="uid://s77m84uui5tu" path="res://game/characters/player/player.tscn" id="4_0a6ls"]
 [ext_resource type="PackedScene" uid="uid://cocv43ht28b3c" path="res://game/objects/hazards/spikes/spikes.tscn" id="5_74y2v"]
 [ext_resource type="PackedScene" uid="uid://b77t0tsmuxo4g" path="res://game/objects/collectibles/hearts/heart.tscn" id="6_hkipe"]

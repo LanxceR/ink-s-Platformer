@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://bs4c36vo585ts"]
 
-[ext_resource type="Texture2D" uid="uid://dmufixl6yues" path="res://assets/heart_plat template/tileset.png" id="1_7y0tt"]
-[ext_resource type="Texture2D" uid="uid://4hoh2st42xkh" path="res://assets/heart_plat template/slopes.png" id="2_4cwpr"]
-[ext_resource type="Texture2D" uid="uid://be0el7l253tea" path="res://assets/heart_plat template/slopes_flipped.png" id="3_mmcya"]
+[ext_resource type="Texture2D" uid="uid://dmufixl6yues" path="res://assets/heart_plat template/tileset.png" id="1_fy7fm"]
+[ext_resource type="Texture2D" uid="uid://4hoh2st42xkh" path="res://assets/heart_plat template/slopes.png" id="2_jo0t3"]
+[ext_resource type="Texture2D" uid="uid://be0el7l253tea" path="res://assets/heart_plat template/slopes_flipped.png" id="3_u4g4t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ptt8p"]
 resource_name = "terrain"
-texture = ExtResource("1_7y0tt")
+texture = ExtResource("1_fy7fm")
 0:0/0 = 0
 0:0/0/terrain_set = 0
 0:0/0/terrain = 0
@@ -480,7 +480,7 @@ texture = ExtResource("1_7y0tt")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tewde"]
 resource_name = "slopes"
-texture = ExtResource("2_4cwpr")
+texture = ExtResource("2_jo0t3")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -512,7 +512,7 @@ texture = ExtResource("2_4cwpr")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_okn46"]
 resource_name = "slopes_flipped"
-texture = ExtResource("3_mmcya")
+texture = ExtResource("3_u4g4t")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
