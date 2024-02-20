@@ -1,0 +1,64 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Ink Tiles 0.tsx",
+    "automapping.whileDrawing": true,
+    "expandedProjectPaths": [
+        ".",
+        "Tiled Rules",
+        "Rules"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "Ink Tiles 0.tsx": {
+            "scaleInDock": 5.5,
+            "scaleInEditor": 11
+        },
+        "Rules/automap rules.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 159.90909090909093,
+                "y": 79.90909090909092
+            }
+        },
+        "Tiled Rules/automap rules.tmx": {
+            "scale": 11,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 55.81818181818181,
+                "y": 20.09090909090909
+            }
+        },
+        "testmap 0.tmx": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 127.875,
+                "y": 127.875
+            }
+        }
+    },
+    "last.imagePath": "E:/Misc-WD/Godot Proj/Assets/ink's Platformer/Tiled",
+    "map.height": 20,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "openFiles": [
+        "Ink Tiles 0.tsx",
+        "testmap 0.tmx",
+        "Rules/automap rules.tmx"
+    ],
+    "project": "ink.tiled-project",
+    "recentFiles": [
+        "Rules/automap rules.tmx",
+        "testmap 0.tmx",
+        "Ink Tiles 0.tsx",
+        "Tiled Rules/automap rules.tmx"
+    ]
+}

@@ -35,6 +35,15 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="ink-s Platformer"
 
+[editor]
+
+import/use_multiple_threads=false
+naming/driver.windows=""
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/YATI/plugin.cfg", "res://addons/nv.file_system/plugin.cfg")
+
 [gui]
 
 theme/custom="res://game/interface/themes/default_theme.tres"
@@ -186,6 +195,10 @@ shoot_p2={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[input_devices]
+
+pen_tablet/driver.windows="wintab"
 
 [layer_names]
 

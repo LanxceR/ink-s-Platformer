@@ -51,6 +51,7 @@ public partial class Player : CharacterBody2D
                 (child as PlayerAir).WallJump += HandleWallJumpTime;
         }
 
+        // Hazard Detection
         hazardDetectionArea.AreaEntered += OnHazardEntered;
         spawnPos = GlobalPosition;
     }

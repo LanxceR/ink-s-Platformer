@@ -3,14 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://diqbuiwgwqqr0" path="res://game/levels/test_world/test_world.tscn" id="1_veoqi"]
 [ext_resource type="Texture2D" uid="uid://ctjk37hpw7idg" path="res://assets/gizmos/Measurements.png" id="2_q880b"]
 [ext_resource type="PackedScene" uid="uid://dd5ns7j1ox2k5" path="res://game/levels/test_world/test_level_two.tscn" id="2_x77fg"]
-[ext_resource type="PackedScene" uid="uid://bs4c36vo585ts" path="res://game/levels/test_world/test_tile_map.tscn" id="3_sj4av"]
+[ext_resource type="PackedScene" uid="uid://bs4c36vo585ts" path="res://game/tilemaps/test_tile_map.tscn" id="3_sj4av"]
 [ext_resource type="PackedScene" uid="uid://cocv43ht28b3c" path="res://game/objects/hazards/spikes/spikes.tscn" id="4_cy3n0"]
 [ext_resource type="PackedScene" uid="uid://b77t0tsmuxo4g" path="res://game/objects/collectibles/hearts/heart.tscn" id="5_jf2dg"]
 
 [node name="TestLevelOne" instance=ExtResource("1_veoqi")]
 _nextLevelScene = ExtResource("2_x77fg")
 
-[node name="Player" parent="." index="0"]
+[node name="Player" parent="." index="1"]
 position = Vector2(32, 48)
 
 [node name="V Measure" type="Sprite2D" parent="." index="3"]

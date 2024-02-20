@@ -1,0 +1,23 @@
+[remap]
+
+importer="YATI"
+type="PackedScene"
+uid="uid://c25ntm25skvnu"
+path="res://.godot/imported/automap rules.tmx-b862e2d16d6ecdfcb424de084bf57880.tscn"
+
+[deps]
+
+source_file="res://game/levels/test_Tiled/Rules/automap rules.tmx"
+dest_files=["res://.godot/imported/automap rules.tmx-b862e2d16d6ecdfcb424de084bf57880.tscn"]
+
+[params]
+
+use_tilemap_layers=false
+use_default_filter=false
+add_class_as_metadata=false
+add_id_as_metadata=false
+no_alternative_tiles=false
+map_wangset_to_terrain=false
+tiled_project_file=""
+post_processor=""
+save_tileset_to=""
